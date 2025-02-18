@@ -1,33 +1,40 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
-import { Brain } from "lucide-react";
-import { WaitlistForm } from "./WaitlistForm";
+import { Brain, Loader2 } from "lucide-react";
+import { useToast } from "./ui/use-toast";
 import LearningAnimation from "./LearningAnimation";
 
 interface HeroSectionProps {
-  onAnalyze?: (url: string) => void;
-  isAnalyzing?: boolean;
+  onSubmit?: (email: string) => void;
+  isLoading?: boolean;
 }
 
 const HeroSection = ({
-  onAnalyze = () => {},
-  isAnalyzing = false,
+  onSubmit = () => {},
+  isLoading = false,
 }: HeroSectionProps) => {
-  const [url, setUrl] = useState("");
+  const [email, setEmail] = useState("");
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onAnalyze(url);
+    if (!email) return;
+
+    onSubmit(email);
+    toast({
+      title: "Success!",
+      description:
+        "We'll analyze your learning preferences and get back to you.",
+    });
   };
 
   return (
     <div className="relative min-h-[600px] w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900 via-background to-background px-4 py-24 overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
       <LearningAnimation />
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl relative z-10">
         <div className="flex flex-col items-center text-center">
           {/* Animated AI Icon */}
           <motion.div
@@ -77,10 +84,39 @@ const HeroSection = ({
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
+            className="flex"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <WaitlistForm className="flex justify-center" />
-            </motion.div>
+            <motion.form
+              onSubmit={handleSubmit}
+              className="flex justify-center"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="flex max-w-sm space-x-2">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="h-12 bg-white/5 min-w-[240px] text-white placeholder:text-gray-400 border border-white/10"
+                  autoComplete="email"
+                  spellCheck="false"
+                />
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="h-12"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Get Started"
+                  )}
+                </Button>
+              </div>
+            </motion.form>
           </motion.div>
         </div>
       </div>

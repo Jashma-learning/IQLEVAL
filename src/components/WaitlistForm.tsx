@@ -45,7 +45,7 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="h-12 bg-white/5 min-w-[240px] text-white placeholder:text-gray-400"
+          className="h-12 bg-white/5 min-w-[240px] text-white placeholder:text-gray-400 border border-white/10"
           autoComplete="email"
           spellCheck="false"
         />

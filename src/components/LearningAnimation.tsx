@@ -187,7 +187,7 @@ const LearningAnimation = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="absolute inset-0 pointer-events-none"
+      className="absolute inset-0 pointer-events-none z-0"
     >
       <canvas
         ref={canvasRef}

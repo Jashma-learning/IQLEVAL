@@ -5,28 +5,28 @@ import AnalysisPreview from "./AnalysisPreview";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Home = () => {
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisUrl, setAnalysisUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
-  const handleAnalyze = (url: string) => {
-    setIsAnalyzing(true);
-    setAnalysisUrl(url);
+  const handleSubmit = async (email: string) => {
+    setIsLoading(true);
+    setUserEmail(email);
 
-    // Simulate analysis delay
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      setShowPreview(true);
-    }, 2000);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    setIsLoading(false);
+    setShowPreview(true);
   };
 
   const handleFullAnalysis = () => {
-    console.log("Requesting full analysis for:", analysisUrl);
+    console.log("Requesting full analysis for:", userEmail);
   };
 
   return (
     <div className="min-h-screen w-full bg-background">
-      <HeroSection onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} />
+      <HeroSection onSubmit={handleSubmit} isLoading={isLoading} />
 
       <AnimatePresence>
         {showPreview && (
@@ -37,7 +37,7 @@ const Home = () => {
             className="flex justify-center px-4 py-12"
           >
             <AnalysisPreview
-              url={analysisUrl}
+              url={userEmail}
               onFullAnalysis={handleFullAnalysis}
             />
           </motion.div>
