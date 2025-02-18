@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Brain, Loader2 } from "lucide-react";
-import { useToast } from "./ui/use-toast";
 import LearningAnimation from "./LearningAnimation";
 
 interface HeroSectionProps {
@@ -16,18 +15,13 @@ const HeroSection = ({
   isLoading = false,
 }: HeroSectionProps) => {
   const [email, setEmail] = useState("");
-  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     onSubmit(email);
-    toast({
-      title: "Success!",
-      description:
-        "We'll analyze your learning preferences and get back to you.",
-    });
+    setEmail(""); // Reset the email input after submission
   };
 
   return (
@@ -84,7 +78,6 @@ const HeroSection = ({
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="flex"
           >
             <motion.form
               onSubmit={handleSubmit}
@@ -112,7 +105,7 @@ const HeroSection = ({
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    "Get Started"
+                    "Join Waitlist"
                   )}
                 </Button>
               </div>
