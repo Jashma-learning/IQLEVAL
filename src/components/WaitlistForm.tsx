@@ -17,20 +17,15 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
       name="waitlist"
       method="POST"
       data-netlify="true"
-      netlify-honeypot="bot-field"
-      className={`w-full ${className}`}
+      className={`w-full max-w-md mx-auto px-4 ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.5 }}
-      action="/success"
     >
-      {/* These hidden inputs are required for Netlify Forms */}
+      {/* Required for Netlify Forms */}
       <input type="hidden" name="form-name" value="waitlist" />
-      <div hidden>
-        <input name="bot-field" />
-      </div>
 
-      <div className="flex flex-col sm:flex-row w-full max-w-sm mx-auto gap-3 sm:gap-2 px-4 sm:px-0">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-2">
         <Input
           type="email"
           name="email"
@@ -38,14 +33,14 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="h-12 bg-white/5 w-full sm:min-w-[240px] text-white placeholder:text-gray-400 border border-white/10"
+          className="h-12 bg-white/5 w-full text-white placeholder:text-gray-400 border border-white/10"
           autoComplete="email"
           spellCheck="false"
         />
         <Button 
           type="submit" 
           size="lg" 
-          className="h-12 w-full sm:w-auto bg-primary hover:bg-primary-600 text-white" 
+          className="h-12 w-full sm:w-auto bg-primary hover:bg-primary-600 text-white whitespace-nowrap" 
           disabled={isLoading}
         >
           {isLoading ? (
