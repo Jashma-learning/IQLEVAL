@@ -21,11 +21,14 @@ const HeroAnimation = () => {
   const pulseDirection = useRef(1);
 
   const colors = [
-    "rgba(99, 102, 241, ",    // Indigo
-    "rgba(168, 85, 247, ",    // Purple
-    "rgba(236, 72, 153, ",    // Pink
-    "rgba(59, 130, 246, ",    // Blue
-    "rgba(16, 185, 129, ",    // Emerald
+    `rgba(59, 130, 246, `,   // Primary (Blue)
+    `rgba(139, 92, 246, `,   // Secondary (Purple)
+    `rgba(236, 72, 153, `,   // Accent (Pink)
+    `rgba(99, 102, 241, `,   // Indigo
+    `rgba(14, 165, 233, `,   // Sky
+    `rgba(168, 85, 247, `,   // Purple
+    `rgba(236, 72, 153, `,   // Pink
+    `rgba(59, 130, 246, `,   // Blue
   ];
 
   const initParticles = React.useCallback(() => {
