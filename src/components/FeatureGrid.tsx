@@ -30,9 +30,22 @@ const FeatureGrid = ({ features = defaultFeatures }: FeatureGridProps) => {
   };
 
   return (
-    <section className="w-full bg-transparent py-16 px-4 relative overflow-hidden">
+    <section className="w-full bg-transparent py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
       <div className="container mx-auto max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl font-bold mb-4">Key Platform Features</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Discover the powerful features that make our AI learning platform
+            unique
+          </p>
+        </motion.div>
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}

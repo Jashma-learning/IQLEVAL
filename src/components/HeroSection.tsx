@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Brain, Loader2 } from "lucide-react";
-import LearningAnimation from "./LearningAnimation";
+import HeroAnimation from "./HeroAnimation";
 
 interface HeroSectionProps {
   onSubmit?: (email: string) => void;
@@ -27,7 +27,7 @@ const HeroSection = ({
   return (
     <div className="relative min-h-[600px] w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900 via-background to-background px-4 py-24 overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-      <LearningAnimation />
+      <HeroAnimation />
       <div className="mx-auto max-w-6xl relative z-10">
         <div className="flex flex-col items-center text-center">
           {/* Animated AI Icon */}
