@@ -18,29 +18,51 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // Submit to Netlify forms
+      const formData = new FormData(e.target as HTMLFormElement);
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
 
-    toast({
-      title: "You're on the list!",
-      description: "We'll notify you when we launch.",
-    });
-
-    setIsLoading(false);
-    setEmail("");
+      toast({
+        title: "You're on the list!",
+        description: "We'll notify you when we launch.",
+      });
+      
+      setEmail("");
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <motion.form
+      name="waitlist"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
       className={className}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.5 }}
     >
+      <input type="hidden" name="form-name" value="waitlist" />
+      <div className="hidden">
+        <input name="bot-field" />
+      </div>
       <div className="flex max-w-sm space-x-2">
         <Input
           type="email"
+          name="email"
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
