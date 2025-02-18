@@ -38,8 +38,8 @@ const HeroAnimation = () => {
         x: Math.random() * window.innerWidth,
         y: Math.random() * 600,
         size: Math.random() * 2 + 1,
-        speedX: (Math.random() - 0.5) * 2,
-        speedY: (Math.random() - 0.5) * 2,
+        speedX: (Math.random() - 0.5) * 1,
+        speedY: (Math.random() - 0.5) * 1,
         color: colors[colorIndex],
         opacity: Math.random() * 0.5 + 0.3,
         connections: [],
@@ -65,13 +65,13 @@ const HeroAnimation = () => {
   const drawParticles = React.useCallback((ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    // Update pulse effect
-    pulseSize.current += 0.02 * pulseDirection.current;
+    // Slow down pulse effect
+    pulseSize.current += 0.01 * pulseDirection.current;
     if (pulseSize.current > 1) pulseDirection.current = -1;
     if (pulseSize.current < 0) pulseDirection.current = 1;
 
-    // Update hue with faster rotation
-    hue.current = (hue.current + 1) % 360;
+    // Slow down hue rotation
+    hue.current = (hue.current + 0.5) % 360;
 
     // Draw connections with pulse effect
     particles.current.forEach((particle, i) => {
@@ -93,26 +93,26 @@ const HeroAnimation = () => {
       });
     });
 
-    // Draw and update particles with enhanced effects
+    // Draw and update particles with slower motion
     particles.current.forEach((particle) => {
-      // Add wave motion
-      particle.y += Math.sin(Date.now() * 0.001 + particle.x * 0.01) * 0.2;
+      // Reduce wave motion speed
+      particle.y += Math.sin(Date.now() * 0.0005 + particle.x * 0.01) * 0.1;
       
-      // Update position with slightly increased speed
-      particle.x += particle.speedX * 1.2;
-      particle.y += particle.speedY * 1.2;
+      // Reduce particle speed
+      particle.x += particle.speedX * 0.6;
+      particle.y += particle.speedY * 0.6;
 
-      // Bounce off edges with random speed adjustment
+      // Gentler bounce effect
       if (particle.x < 0 || particle.x > ctx.canvas.width) {
-        particle.speedX *= -1.05;
-        particle.speedX = Math.min(Math.max(particle.speedX, -3), 3);
+        particle.speedX *= -1;
+        particle.speedX = Math.min(Math.max(particle.speedX, -1.5), 1.5);
       }
       if (particle.y < 0 || particle.y > ctx.canvas.height) {
-        particle.speedY *= -1.05;
-        particle.speedY = Math.min(Math.max(particle.speedY, -3), 3);
+        particle.speedY *= -1;
+        particle.speedY = Math.min(Math.max(particle.speedY, -1.5), 1.5);
       }
 
-      // Enhanced mouse interaction
+      // Gentler mouse interaction
       const dx = mousePos.current.x - particle.x;
       const dy = mousePos.current.y - particle.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
@@ -120,11 +120,10 @@ const HeroAnimation = () => {
       if (distance < 150) {
         const angle = Math.atan2(dy, dx);
         const force = (150 - distance) / 150;
-        particle.speedX -= Math.cos(angle) * force * 0.5;
-        particle.speedY -= Math.sin(angle) * force * 0.5;
+        particle.speedX -= Math.cos(angle) * force * 0.2;
+        particle.speedY -= Math.sin(angle) * force * 0.2;
         
-        // Add size pulse effect near mouse
-        const sizePulse = 1 + (force * pulseSize.current);
+        const sizePulse = 1 + (force * pulseSize.current * 0.5);
         particle.size *= sizePulse;
       }
 
