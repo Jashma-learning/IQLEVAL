@@ -17,7 +17,7 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
       name="waitlist"
       method="POST"
       data-netlify="true"
-      className={`w-full max-w-md mx-auto px-4 ${className}`}
+      className={`w-full max-w-[320px] sm:max-w-md mx-auto px-2 sm:px-4 ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.5 }}
@@ -25,7 +25,7 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
       {/* Required for Netlify Forms */}
       <input type="hidden" name="form-name" value="waitlist" />
 
-      <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-2">
+      <div className="flex flex-col-reverse sm:flex-row gap-2">
         <Input
           type="email"
           name="email"
